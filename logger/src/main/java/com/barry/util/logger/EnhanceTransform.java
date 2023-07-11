@@ -1,7 +1,6 @@
 package com.barry.util.logger;
 
 
-import com.android.SdkConstants;
 import com.android.build.api.transform.DirectoryInput;
 import com.android.build.api.transform.Format;
 import com.android.build.api.transform.QualifiedContent;
@@ -11,10 +10,12 @@ import com.android.build.api.transform.TransformInput;
 import com.android.build.api.transform.TransformInvocation;
 import com.android.build.gradle.internal.pipeline.TransformManager;
 import com.barry.util.logger.asm.ClassVisitorAdapter;
-import com.barry.util.logger.utils.EnhanceFileUtil;
 
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.gradle.api.Project;
-import org.gradle.internal.impldep.org.apache.commons.io.FileUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
@@ -54,12 +55,14 @@ public class EnhanceTransform extends Transform {
 
     @Override
     public boolean isIncremental() {
-        return false;
+        return true;
     }
 
 
     @Override
     public void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
+        super.transform(transformInvocation);
+        System.out.println("isIncremental is " + transformInvocation.isIncremental());
         Collection<TransformInput> inputs = transformInvocation.getInputs();
         for (TransformInput input : inputs) {
             for (DirectoryInput directoryInput : input.getDirectoryInputs()) {
@@ -69,10 +72,12 @@ public class EnhanceTransform extends Transform {
                         directoryInput.getName(), directoryInput.getContentTypes(),
                         directoryInput.getScopes(), Format.DIRECTORY);
 
-                Collection<File> files = EnhanceFileUtil.listClassFiles(src);
+                FileUtils.forceMkdir(dst);
+
+                Collection<File> files = FileUtils.listFiles(src, new SuffixFileFilter(".class"), TrueFileFilter.INSTANCE);
                 for (File f : files) {
 
-                    String className = f.getAbsolutePath().substring(src.getAbsolutePath().length() + 1, f.getAbsolutePath().length() - SdkConstants.DOT_CLASS.length()).replace(File.separatorChar, '.');
+                    String className = f.getAbsolutePath().substring(src.getAbsolutePath().length() + 1, f.getAbsolutePath().length() - ".class".length()).replace(File.separatorChar, '.');
 
                     if (className.startsWith("com.barry.util")) {
                         try {
@@ -99,7 +104,7 @@ public class EnhanceTransform extends Transform {
         ClassReader classReader = new ClassReader(fis);
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         ClassVisitorAdapter classVisitorAdapter = new ClassVisitorAdapter(classWriter);
-        classReader.accept(classVisitorAdapter, 0);
+        classReader.accept(classVisitorAdapter, ClassReader.SKIP_FRAMES);
         return classWriter.toByteArray();
     }
 
