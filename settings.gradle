@@ -1,0 +1,5 @@
+includeBuild("logger")
+
+rootProject.name = "Logger"
+include ':core'
+include ':app'

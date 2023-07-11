@@ -1,0 +1,23 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+gradlePlugin {
+    plugins {
+        simplePlugin {
+            id = 'logger-enhance-plugin'
+            implementationClass = 'com.barry.util.logger.EnhancePlugin'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+}
+
+
+dependencies {
+    compileOnly 'com.android.tools.build:gradle:4.2.0'
+}
