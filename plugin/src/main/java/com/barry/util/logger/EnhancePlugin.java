@@ -17,7 +17,6 @@ public class EnhancePlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         LoggerExtension logger = project.getExtensions().create("logger", LoggerExtension.class);
-
         project.afterEvaluate(new Action<Project>() {
             @Override
             public void execute(Project project) {
@@ -30,7 +29,5 @@ public class EnhancePlugin implements Plugin<Project> {
                 }
             }
         });
-
-
     }
 }

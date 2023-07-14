@@ -1,5 +1,7 @@
 package com.barry.util.app;
 
+import com.barry.util.core.LogMethod;
+
 /**
  * @author yunfan
  * @date 2023/7/11
@@ -10,6 +12,7 @@ public class Target {
         new Target().test();
     }
 
+    @LogMethod
     public void test() {
 
         try {

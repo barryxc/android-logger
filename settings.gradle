@@ -1,5 +1,6 @@
-includeBuild("logger")
-
+includeBuild("plugin")
 rootProject.name = "Logger"
-include ':core'
 include ':app'
+include ":core"
+
+project(":core").projectDir = new File(settingsDir, "./plugin/core")
