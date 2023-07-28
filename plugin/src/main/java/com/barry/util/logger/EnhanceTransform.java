@@ -11,7 +11,6 @@ import com.android.build.api.transform.TransformInvocation;
 import com.android.build.gradle.internal.pipeline.TransformManager;
 import com.barry.util.logger.asm.ClassVisitorAdapter;
 
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -32,7 +31,6 @@ import java.util.Set;
  */
 public class EnhanceTransform extends Transform {
     private final Project mProject;
-
 
     public EnhanceTransform(Project project) {
         mProject = project;
@@ -55,14 +53,13 @@ public class EnhanceTransform extends Transform {
 
     @Override
     public boolean isIncremental() {
-        return true;
+        return false;
     }
 
 
     @Override
     public void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation);
-        System.out.println("isIncremental is " + transformInvocation.isIncremental());
         Collection<TransformInput> inputs = transformInvocation.getInputs();
         for (TransformInput input : inputs) {
             for (DirectoryInput directoryInput : input.getDirectoryInputs()) {
@@ -76,27 +73,21 @@ public class EnhanceTransform extends Transform {
 
                 Collection<File> files = FileUtils.listFiles(src, new SuffixFileFilter(".class"), TrueFileFilter.INSTANCE);
                 for (File f : files) {
+                    try {
+                        FileInputStream fis = new FileInputStream(f.getAbsoluteFile());
+                        //具体的插桩逻辑
+                        byte[] byteCode = referHackWhenInit(fis);
+                        fis.close();
 
-                    String className = f.getAbsolutePath().substring(src.getAbsolutePath().length() + 1, f.getAbsolutePath().length() - ".class".length()).replace(File.separatorChar, '.');
-
-                    if (className.startsWith("com.barry.util")) {
-                        try {
-                            FileInputStream fis = new FileInputStream(f.getAbsoluteFile());
-                            //具体的插桩逻辑
-                            byte[] byteCode = referHackWhenInit(fis);
-                            fis.close();
-
-                            FileOutputStream fos = new FileOutputStream(f.getAbsoluteFile());
-                            fos.write(byteCode);
-                            fos.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        FileOutputStream fos = new FileOutputStream(f.getAbsoluteFile());
+                        fos.write(byteCode);
+                        fos.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
                 FileUtils.copyDirectory(src, dst);
             }
-
         }
     }
 

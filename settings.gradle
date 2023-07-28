@@ -1,6 +1,5 @@
 includeBuild("plugin")
 rootProject.name = "Logger"
 include ':app'
-include ":core"
-
-project(":core").projectDir = new File(settingsDir, "./plugin/core")
+include ':logapi'
+include ':javalib'

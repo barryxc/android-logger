@@ -7,7 +7,6 @@ package com.barry.util.logger;
 public class LoggerExtension {
     public boolean enable;
 
-
     public LoggerExtension() {
     }
 

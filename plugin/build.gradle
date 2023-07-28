@@ -1,6 +1,9 @@
 plugins {
     id 'java-gradle-plugin'
+    id 'maven-publish'
 }
+
+def proj = project
 
 gradlePlugin {
     plugins {
@@ -9,6 +12,10 @@ gradlePlugin {
             implementationClass = 'com.barry.util.logger.EnhancePlugin'
         }
     }
+}
+
+task debugTest {
+    dependsOn "assemble"
 }
 
 repositories {
@@ -20,6 +27,20 @@ repositories {
 
 dependencies {
     compileOnly 'com.android.tools.build:gradle:4.2.0'
-
     implementation 'commons-io:commons-io:2.4'
+}
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from proj.components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = layout.buildDirectory.dir("repo")
+        }
+    }
 }

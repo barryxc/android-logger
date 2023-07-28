@@ -1,6 +1,7 @@
 package com.barry.util.app;
 
-import com.barry.util.core.LogMethod;
+
+import com.barry.util.core.api.PrintCost;
 
 /**
  * @author yunfan
@@ -12,9 +13,8 @@ public class Target {
         new Target().test();
     }
 
-    @LogMethod
+    @PrintCost
     public void test() {
-
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
