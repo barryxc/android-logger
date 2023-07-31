@@ -19,6 +19,8 @@ java {
 }
 
 dependencies {
+
+    implementation fileTree("./libs")
     implementation(project(':logapi'))
     implementation 'info.picocli:picocli:4.7.4'
 

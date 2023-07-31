@@ -6,12 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 监控函数耗时
+ * 函数栈
  *
  * @author yunfan
  * @date 2023/7/28
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface PrintCost {
+public @interface MethodInspect {
 }

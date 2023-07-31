@@ -10,5 +10,4 @@ public class ShellMain {
     public static void main(String[] args) {
         new CommandLine(new ShellCommand()).execute(args);
     }
-
 }

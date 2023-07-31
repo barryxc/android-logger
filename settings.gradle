@@ -2,4 +2,4 @@ includeBuild("plugin")
 rootProject.name = "Logger"
 include ':app'
 include ':logapi'
-include ':javalib'
+include ':asmfy'

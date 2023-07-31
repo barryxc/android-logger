@@ -13,7 +13,8 @@ import org.objectweb.asm.commons.AdviceAdapter;
 public class MethodEnhanceVisitor extends AdviceAdapter {
 
     private int index;
-
+    private boolean printCost;
+    private boolean methodInspect;
 
     public MethodEnhanceVisitor(MethodVisitor methodVisitor, int access, String name, String descriptor) {
         super(ASM6, methodVisitor, access, name, descriptor);
@@ -24,6 +25,13 @@ public class MethodEnhanceVisitor extends AdviceAdapter {
     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
         System.out.println("visitAnnotation:" + descriptor + visible);
 
+
+        if ("Lcom/barry/util/core/api/MethodCost;".equals(descriptor)) {
+            printCost = true;
+        }
+        if ("Lcom/barry/util/core/api/MethodInspect;".equals(descriptor)) {
+            methodInspect = true;
+        }
 
         AnnotationVisitor annotationVisitor = super.visitAnnotation(descriptor, visible);
         return new AnnotationVisitor(ASM6, annotationVisitor) {
@@ -59,23 +67,52 @@ public class MethodEnhanceVisitor extends AdviceAdapter {
     protected void onMethodEnter() {
         super.onMethodEnter();
 
-        mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
-        index = newLocal(Type.LONG_TYPE);
-        mv.visitVarInsn(LSTORE, index);
+        if (methodInspect) {
+            mv.visitMethodInsn(INVOKESTATIC, "java/lang/Thread", "currentThread", "()Ljava/lang/Thread;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Thread", "getStackTrace", "()[Ljava/lang/StackTraceElement;", false);
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitInsn(ICONST_1);
+            mv.visitInsn(AALOAD);
+            mv.visitVarInsn(ASTORE, 2);
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StackTraceElement", "getClassName", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StackTraceElement", "getMethodName", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StackTraceElement", "getLineNumber", "()I", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StackTraceElement", "getFileName", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
 
+        }
+
+        if (printCost) {
+            mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
+            index = newLocal(Type.LONG_TYPE);
+            mv.visitVarInsn(LSTORE, index);
+
+        }
 
     }
 
     @Override
     protected void onMethodExit(int opcode) {
 
-        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
-        mv.visitVarInsn(LLOAD, index);
-        mv.visitInsn(LSUB);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(J)V", false);
-
+        if (printCost) {
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
+            mv.visitVarInsn(LLOAD, index);
+            mv.visitInsn(LSUB);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(J)V", false);
+        }
         super.onMethodExit(opcode);
-
     }
 }

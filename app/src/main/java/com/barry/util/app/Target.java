@@ -1,7 +1,8 @@
 package com.barry.util.app;
 
 
-import com.barry.util.core.api.PrintCost;
+import com.barry.util.core.api.MethodCost;
+import com.barry.util.core.api.MethodInspect;
 
 /**
  * @author yunfan
@@ -13,10 +14,19 @@ public class Target {
         new Target().test();
     }
 
-    @PrintCost
+    @MethodCost
     public void test() {
         try {
             Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @MethodInspect
+    public void test2() {
+        try {
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
