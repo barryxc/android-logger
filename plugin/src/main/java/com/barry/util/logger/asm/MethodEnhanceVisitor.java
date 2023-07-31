@@ -1,6 +1,8 @@
 package com.barry.util.logger.asm;
 
 
+import com.barry.util.logger.Logger;
+
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
@@ -20,47 +22,17 @@ public class MethodEnhanceVisitor extends AdviceAdapter {
         super(ASM6, methodVisitor, access, name, descriptor);
     }
 
-
     @Override
     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-        System.out.println("visitAnnotation:" + descriptor + visible);
-
-
         if ("Lcom/barry/util/core/api/MethodCost;".equals(descriptor)) {
+            Logger.d("@MethodCost encounter:");
             printCost = true;
         }
         if ("Lcom/barry/util/core/api/MethodInspect;".equals(descriptor)) {
+            Logger.d("@MethodInspect encounter");
             methodInspect = true;
         }
-
-        AnnotationVisitor annotationVisitor = super.visitAnnotation(descriptor, visible);
-        return new AnnotationVisitor(ASM6, annotationVisitor) {
-
-            @Override
-            public void visit(String name, Object value) {
-                super.visit(name, value);
-            }
-
-            @Override
-            public void visitEnum(String name, String descriptor, String value) {
-                super.visitEnum(name, descriptor, value);
-            }
-
-            @Override
-            public AnnotationVisitor visitAnnotation(String name, String descriptor) {
-                return super.visitAnnotation(name, descriptor);
-            }
-
-            @Override
-            public AnnotationVisitor visitArray(String name) {
-                return super.visitArray(name);
-            }
-
-            @Override
-            public void visitEnd() {
-                super.visitEnd();
-            }
-        };
+        return super.visitAnnotation(descriptor, visible);
     }
 
     @Override

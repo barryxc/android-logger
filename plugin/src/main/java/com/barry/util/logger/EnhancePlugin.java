@@ -1,16 +1,11 @@
 package com.barry.util.logger;
 
 
-import com.android.build.api.variant.VariantFilter;
-import com.android.build.gradle.AppExtension;
 import com.android.build.gradle.BaseExtension;
-import com.android.build.gradle.LibraryExtension;
-import com.android.build.gradle.internal.VariantManager;
-import com.android.build.gradle.internal.dsl.BuildType;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.ProjectConfigurationException;
 
 /**
  * @author yunfan
@@ -20,29 +15,26 @@ public class EnhancePlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        Logger.attach(project);
+        checkAndroidPlugins(project);
+        createExtensions(project);
+        registerTransform(project);
+    }
 
-        LoggerExtension logger = project.getExtensions().create("logger", LoggerExtension.class);
-        project.afterEvaluate(new Action<Project>() {
-            @Override
-            public void execute(Project project) {
+    private void createExtensions(Project project) {
+        project.getExtensions().create("logger", LoggerExtension.class);
+    }
 
-                if (logger.enable) {
-                    BaseExtension androidExtension = (BaseExtension) project.getExtensions().findByType(BaseExtension.class);
+    private void registerTransform(Project project) {
+        BaseExtension android = (BaseExtension) project.getExtensions().findByName("android");
+        assert android != null;
+        android.registerTransform(new EnhanceTransform(project));
+    }
 
-                    if (androidExtension != null) {
-                        androidExtension.variantFilter(new Action<VariantFilter>() {
-                            @Override
-                            public void execute(VariantFilter variantFilter) {
-
-                                if (variantFilter.getName().contains("debug")) {
-                                    androidExtension.registerTransform(new EnhanceTransform(project));
-                                }
-                            }
-                        });
-                    }
-
-                }
-            }
-        });
+    private void checkAndroidPlugins(Project project) {
+        if (!project.getPlugins().hasPlugin("com.android.library")
+                && !project.getPlugins().hasPlugin("com.android.application")) {
+            throw new ProjectConfigurationException("enhance-log-plugin must be applied in project that has android plugin!", (Throwable) null);
+        }
     }
 }

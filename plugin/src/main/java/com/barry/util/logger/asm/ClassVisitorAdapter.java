@@ -13,7 +13,6 @@ public class ClassVisitorAdapter extends ClassVisitor {
 
     public ClassVisitorAdapter(ClassVisitor visitor) {
         super(ASM6, visitor);
-
     }
 
     @Override
