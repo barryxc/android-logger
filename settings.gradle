@@ -1,5 +1,4 @@
-includeBuild("plugin")
 rootProject.name = "Logger"
-include ':app'
-include ':logapi'
 include ':asmfy'
+include ':logapi'
+include ':gradle-plugin'
