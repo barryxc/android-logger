@@ -14,7 +14,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.0"
 
-        classpath "com.github.barryxc:logger:v0.0.5"
+        classpath "com.github.barryxc:logger:v0.0.6"
     }
 }
 
