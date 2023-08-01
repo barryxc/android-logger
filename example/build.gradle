@@ -14,7 +14,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.0"
 
-        classpath "com.github.barryxc:logger:v0.0.6"
+        classpath "com.github.barryxc:logger:v0.0.7"
     }
 }
 
@@ -22,6 +22,8 @@ buildscript {
 subprojects {
 
     repositories {
+        google()
+        mavenCentral()
         maven { url 'https://www.jitpack.io' }
     }
 }

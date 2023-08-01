@@ -2,9 +2,11 @@ plugins {
     id 'com.android.library'
 //    id 'logger-enhance-plugin'
 }
+apply plugin: "enhance-logger-plugin"
 
-
-apply plugin: "logger-enhance-plugin"
+logger {
+    enable = true
+}
 
 android {
     namespace 'com.barry.demo'
@@ -36,5 +38,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation "com.github.barryxc:logger:v0.0.6"
+    implementation "com.github.barryxc:logger:v0.0.7"
 }

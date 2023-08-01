@@ -23,11 +23,11 @@ public class MethodEnhanceVisitor extends AdviceAdapter {
 
     @Override
     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-        if ("Lcom/barry/util/core/api/MethodCost;".equals(descriptor)) {
+        if ("Lcom/barry/logger/api/MethodCost;".equals(descriptor)) {
             Logger.d("@MethodCost encounter:");
             printCost = true;
         }
-        if ("Lcom/barry/util/core/api/MethodInspect;".equals(descriptor)) {
+        if ("Lcom/barry/logger/api/MethodInspect;".equals(descriptor)) {
             Logger.d("@MethodInspect encounter");
             methodInspect = true;
         }
