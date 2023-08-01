@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'logger-enhance-plugin'
+//    id 'logger-enhance-plugin'
 }
 
 
-//apply plugin: "logger-enhance-plugin"
+apply plugin: "logger-enhance-plugin"
 
 android {
     namespace 'com.barry.demo'
