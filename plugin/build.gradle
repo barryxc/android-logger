@@ -32,15 +32,54 @@ dependencies {
 
 publishing {
     publications {
-        myLibrary(MavenPublication) {
-            from proj.components.java
+
+        release(MavenPublication) {
+
+            group = 'com.barry'
+            artifactId = 'logger-enhance-plugin'
+            version = '1.0'
+
+            from components.java
+
+            pom {
+                name = 'logger-enhance-plugin'
+                description = 'A concise description of my library'
+//                url = 'http://www.example.com/library'
+//                properties = [
+//                        myProp          : "value",
+//                        "prop.with.dots": "anotherValue"
+//                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'xc'
+                        name = 'barry'
+                        email = '1253330232@qq.com'
+                    }
+                }
+//                scm {
+//                    connection = 'scm:git:git://example.com/my-library.git'
+//                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
+//                    url = 'http://example.com/my-library/'
+//                }
+            }
+
         }
     }
 
     repositories {
+        mavenLocal()
+
         maven {
-            name = 'myRepo'
-            url = layout.buildDirectory.dir("repo")
+            name = 'myrepo'
+            url = "${project.buildDir}/repo"
         }
     }
+
+
 }
