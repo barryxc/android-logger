@@ -9,6 +9,16 @@ dependencies {
 }
 
 
+gradlePlugin {
+    plugins {
+        logger {
+            id = 'com.barry.logger.plugin'
+            implementationClass = 'com.barry.logger.EnhancePlugin'
+        }
+    }
+}
+
+
 repositories {
     mavenCentral()
     google()
