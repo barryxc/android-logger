@@ -1,5 +1,6 @@
 package com.barry.demo;
 
+
 import com.barry.logger.api.MethodCost;
 import com.barry.logger.api.MethodInspect;
 
@@ -14,7 +15,7 @@ public class Target {
 
     }
 
-    @MethodCost
+    @MethodInspect
     public void cost() {
         try {
             Thread.sleep(1000);
@@ -24,7 +25,7 @@ public class Target {
     }
 
 
-    @MethodInspect
+    @MethodCost
     public void test() {
         try {
             Thread.sleep(1000);

@@ -25,5 +25,6 @@ publishing {
         maven {
             url "${project.buildDir}" + "/repo"
         }
+        mavenLocal()
     }
 }

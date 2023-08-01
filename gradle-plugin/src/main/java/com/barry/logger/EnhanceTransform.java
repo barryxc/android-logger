@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -48,7 +49,11 @@ public class EnhanceTransform extends Transform {
 
     @Override
     public Set<? super QualifiedContent.Scope> getScopes() {
-        return TransformManager.SCOPE_FULL_PROJECT;
+        if (Utils.isAndroidLibrary(mProject)) {
+            return Collections.singleton(QualifiedContent.Scope.PROJECT);
+        } else {
+            return TransformManager.SCOPE_FULL_PROJECT;
+        }
     }
 
     @Override
