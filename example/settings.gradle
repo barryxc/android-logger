@@ -8,3 +8,7 @@
  */
 
 rootProject.name = 'example'
+include ':app'
+
+
+includeBuild ".."

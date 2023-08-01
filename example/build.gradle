@@ -4,3 +4,24 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/6.7.1/samples
  */
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.0"
+
+        classpath "com.github.barryxc:logger:v0.0.5"
+    }
+}
+
+
+subprojects {
+
+    repositories {
+        maven { url 'https://www.jitpack.io' }
+    }
+}

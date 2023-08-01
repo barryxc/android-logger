@@ -12,7 +12,7 @@ dependencies {
 gradlePlugin {
     plugins {
         logger {
-            id = 'com.barry.logger.plugin'
+            id = 'logger-enhance-plugin'
             implementationClass = 'com.barry.logger.EnhancePlugin'
         }
     }
