@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'enhance-logger-plugin'
+    id "enhance-logger-plugin"
 }
 
 logger {

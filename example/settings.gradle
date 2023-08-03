@@ -7,8 +7,10 @@
  * in the user manual at https://docs.gradle.org/6.7.1/userguide/multi_project_builds.html
  */
 
+pluginManagement {
+    includeBuild '..'
+}
+
 rootProject.name = 'example'
 include ':app'
-
-includeBuild ".."
 include ':lib'

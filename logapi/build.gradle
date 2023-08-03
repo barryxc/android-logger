@@ -23,7 +23,7 @@ publishing {
     repositories {
         maven {
             name = 'myrepo'
-            url = "${project.buildDir}/repo"
+            url = "${rootProject.buildDir}/repo"
         }
     }
 }

@@ -8,6 +8,7 @@ import com.android.build.api.transform.Transform;
 import com.android.build.api.transform.TransformException;
 import com.android.build.api.transform.TransformInput;
 import com.android.build.api.transform.TransformInvocation;
+import com.android.build.gradle.internal.pipeline.TransformManager;
 import com.barry.logger.asm.ClassVisitorAdapter;
 
 import org.apache.commons.io.FileUtils;
@@ -22,8 +23,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -44,19 +43,16 @@ public class EnhanceTransform extends Transform {
 
     @Override
     public Set<QualifiedContent.ContentType> getInputTypes() {
-        return Collections.singleton(QualifiedContent.DefaultContentType.CLASSES);
+        return TransformManager.CONTENT_CLASS;
     }
 
     @Override
     public Set<? super QualifiedContent.Scope> getScopes() {
-        if (Utils.isAndroidLibrary(mProject)) {
-            return Collections.singleton(QualifiedContent.Scope.PROJECT);
-        } else {
-            Set<? super QualifiedContent.Scope> result = new HashSet<>();
-            QualifiedContent.Scope[] values = QualifiedContent.Scope.values();
-            Collections.addAll(result, values);
-            return result;
+        if (Utils.isAndroidApp(mProject)) {
+            return TransformManager.SCOPE_FULL_PROJECT;
         }
+
+        return TransformManager.PROJECT_ONLY;
     }
 
     @Override
