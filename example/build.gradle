@@ -13,11 +13,12 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         jcenter()
-        maven { url 'https://www.jitpack.io' }
+//        maven { url 'https://www.jitpack.io' }
+        mavenLocal()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$agp_version"
-        classpath("com.github.barryxc.logger:gradle-plugin:main-SNAPSHOT")
+        classpath("Logger:gradle-plugin:1.0")
     }
 }
 
@@ -28,7 +29,8 @@ allprojects {
         mavenCentral()
         gradlePluginPortal()
         jcenter()
-        maven { url 'https://www.jitpack.io' }
+//        maven { url 'https://www.jitpack.io' }
+        mavenLocal()
     }
 
     buildscript {
@@ -36,7 +38,7 @@ allprojects {
             google()
             mavenCentral()
             gradlePluginPortal()
-            jcenter()
+            mavenLocal()
         }
     }
 }

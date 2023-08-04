@@ -3,7 +3,6 @@ package com.barry.logger;
 
 import com.android.build.gradle.BaseExtension;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.ProjectConfigurationException;
@@ -18,13 +17,8 @@ public class EnhancePlugin implements Plugin<Project> {
     public void apply(Project project) {
         Logger.attach(project);
         createExtensions(project);
-        project.afterEvaluate(new Action<Project>() {
-            @Override
-            public void execute(Project project) {
-                checkAndroidPlugins(project);
-                registerTransform(project);
-            }
-        });
+        checkAndroidPlugins(project);
+        registerTransform(project);
     }
 
     private void createExtensions(Project project) {
@@ -32,7 +26,7 @@ public class EnhancePlugin implements Plugin<Project> {
     }
 
     private void registerTransform(Project project) {
-        BaseExtension android = (BaseExtension) project.getExtensions().findByName("android");
+        BaseExtension android = (BaseExtension) project.getExtensions().findByType(BaseExtension.class);
         if (android != null) {
             android.registerTransform(new EnhanceTransform(project));
         }
