@@ -8,11 +8,12 @@ logger {
 }
 
 android {
-    namespace 'com.barry.demo'
-    compileSdk 33
+    compileSdkVersion 33
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
-        minSdk 19
+        minSdkVersion 33
+        applicationId "com.barry.demo"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -25,16 +26,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
 
     implementation fileTree("../logapi")
-
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

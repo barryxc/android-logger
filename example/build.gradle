@@ -6,16 +6,18 @@
  */
 buildscript {
     ext {
-        agp_version = '4.2.0'
+        agp_version = '3.4.1'
     }
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
         jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$agp_version"
+        classpath("com.github.barryxc.logger:gradle-plugin:main-SNAPSHOT")
     }
 }
 
@@ -26,6 +28,7 @@ allprojects {
         mavenCentral()
         gradlePluginPortal()
         jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
 
     buildscript {
