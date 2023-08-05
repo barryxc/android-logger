@@ -1,6 +1,8 @@
 # logger
 
-enhance android log,based on android gradle plugin
+enhance android log,based on android gradle plugin. sample usage in example project
+
+# api
 
 ```
 @MethodCost
@@ -14,7 +16,7 @@ print method cost time
 
 print method trace info
 
-# sample usage
+# usage
 
 build.gradle
 
