@@ -16,7 +16,7 @@ print method trace info
 
 # sample usage
 
-#build.gradle
+build.gradle
 
 ```groovy
 buildScript {
@@ -26,14 +26,19 @@ buildScript {
         }
     }
     dependencies {
-        classpath "com.github.barryxc.logger:enhance-gradle-plugin:${version}"
+        classpath "com.github.barryxc.logger:enhance-logger-plugin:${version}"
     }
 }
+
+apply plugin: "enhance-logger-plugin"
 
 repository {
     maven {
         url "https://jitpack.io"
     }
+}
+dependencies {
+    implementation "com.github.barryxc.logger:logger-api:${version}"
 }
 ```
 
