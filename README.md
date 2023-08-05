@@ -1,6 +1,6 @@
 # logger
 
-enhance android log , transform task based to implement instrument
+enhance android log,based on android gradle plugin
 
 ```
 @MethodCost
@@ -19,27 +19,22 @@ print method trace info
 #build.gradle
 
 ```groovy
-build.gradle
-buildScript{
-	repository{
-		maven{
-			url "https://jitpack.io"
-		}
-  }
-  
-  dependencies{
-    classpath ""
-  }
+buildScript {
+    repository {
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+    dependencies {
+        classpath "com.github.barryxc.logger:enhance-gradle-plugin:${version}"
+    }
 }
 
-subprojects{
-  repository{
-		maven{
-			url "https://jitpack.io"
-		}
-  }
+repository {
+    maven {
+        url "https://jitpack.io"
+    }
 }
-
 ```
 
 
