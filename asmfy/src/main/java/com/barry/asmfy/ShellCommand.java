@@ -1,4 +1,8 @@
-package com.example.javalib;
+/*
+ * Copyright (c) barry 2023 - 2023, All Rights Reserved.
+ */
+
+package com.barry.asmfy;
 
 import org.objectweb.asm.util.ASMifier;
 
