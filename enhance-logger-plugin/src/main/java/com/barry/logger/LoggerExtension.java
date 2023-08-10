@@ -2,7 +2,7 @@ package com.barry.logger;
 
 /**
  * @author yunfan
- * @date 2023/7/10
+ * @since 2023/7/10
  */
 public class LoggerExtension {
     public boolean enable;
