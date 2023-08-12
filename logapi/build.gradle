@@ -8,11 +8,26 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_7
 }
 
+configurations {
+    compat
+    configurations.compile.extendsFrom(compat)
+}
+
+dependencies {
+    compat 'com.android.support:appcompat-v7:28.0.0'
+}
+
+afterEvaluate {
+    configurations.compat.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+        println artifact.id.displayName
+    }
+}
+
 publishing {
     publications {
         release(MavenPublication) {
 
-            group = 'com.barry.logger'
+            groupId = 'com.barry.logger'
             artifactId = 'logger-api'
             version = '1.0'
 
@@ -21,6 +36,7 @@ publishing {
     }
 
     repositories {
+        mavenLocal()
         maven {
             name = 'myrepo'
             url = "${rootProject.buildDir}/repo"
