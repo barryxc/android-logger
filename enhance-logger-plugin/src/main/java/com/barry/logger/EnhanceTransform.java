@@ -73,7 +73,7 @@ public class EnhanceTransform extends Transform {
 
     @Override
     public boolean isIncremental() {
-        return false;
+        return true;
     }
 
 

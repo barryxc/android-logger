@@ -2,4 +2,3 @@ rootProject.name = "Logger"
 include ':asmfy'
 include ':logapi'
 include ':enhance-logger-plugin'
-include ':core-api'

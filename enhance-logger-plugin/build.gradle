@@ -28,13 +28,13 @@ java {
 
 
 publishing {
-//    publications {
-//        release(MavenPublication) {
-//            groupId("com.barry.logger")
-//            artifactId = "enhance-logger-plugin"
-//            version = "1.0"
-//        }
-//    }
+    publications {
+        release(MavenPublication) {
+            groupId("com.barry.logger")
+            artifactId = "enhance-logger-plugin"
+            version = "1.0"
+        }
+    }
     repositories {
         maven {
             url "${rootProject.buildDir}" + "/repo"
