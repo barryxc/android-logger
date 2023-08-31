@@ -1,24 +1,23 @@
-# logger
+## logger
 
-enhance android log,based on android gradle plugin. sample usage in example project
+无侵入 `Android` 日志工具，用于打印函数耗时和跟踪栈信息
 
-# api
+## api
+
+**打印函数耗时**
 
 ```
 @MethodCost
 ```
 
-print method cost time
+**打印函数栈信息**
+
 
 ```
 @MethodInspect
 ```
 
-print method trace info
-
-# usage
-
-build.gradle
+## usage
 
 ```groovy
 buildScript {
@@ -33,6 +32,10 @@ buildScript {
 }
 
 apply plugin: "enhance-logger-plugin"
+
+logger{
+	enable = true
+}
 
 repository {
     maven {
